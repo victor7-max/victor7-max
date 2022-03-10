@@ -1,62 +1,87 @@
 <script setup>
-import BreezeButton from '@/Components/Button.vue';
-import BreezeGuestLayout from '@/Layouts/Guest.vue';
-import BreezeInput from '@/Components/Input.vue';
-import BreezeLabel from '@/Components/Label.vue';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+    import BreezeButton from "@/Components/Button.vue";
+    import BreezeGuestLayout from "@/Layouts/Guest.vue";
+    import BreezeInput from "@/Components/Input.vue";
+    import BreezeLabel from "@/Components/Label.vue";
+    import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
+    import {
+        Head,
+        Link,
+        useForm
+    } from "@inertiajs/inertia-vue3";
 
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    terms: false,
-});
-
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+    const form = useForm({
+        name: "",
+        username: "",
+        gender: "male",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        terms: false
     });
-};
+
+    const submit = () => {
+
+        form.post(route("register"), {
+            onFinish: () => form.reset("password", "password_confirmation")
+        });
+    };
+
 </script>
 
 <template>
-    <BreezeGuestLayout>
+    <div>
+
         <Head title="Register" />
 
         <BreezeValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
-            <div>
-                <BreezeLabel for="name" value="Name" />
-                <BreezeInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
+            <div class="form-group">
+                <input type="text" v-model="form.name" required="required" />
+                <label class="control-label" for="input">First & Last Name</label>
+                <i class="mtrl-select"></i>
+            </div>
+            <div class="form-group">
+                <input type="text" v-model="form.username" required="required" />
+                <label class="control-label" for="input">User Name</label>
+                <i class="mtrl-select"></i>
+            </div>
+            <div class="form-group">
+                <input type="text" v-model="form.email" required="required" />
+                <label class="control-label" for="input">Email</label>
+                <i class="mtrl-select"></i>
+            </div>
+            <div class="form-group">
+                <input type="password" v-model="form.password" required="required" />
+                <label class="control-label" for="input">Password</label>
+                <i class="mtrl-select"></i>
+            </div>
+            <div class="form-group">
+                <input type="password" v-model="form.password_confirmation" required="required" />
+                <label class="control-label" for="input">Confirm Password</label>
+                <i class="mtrl-select"></i>
             </div>
 
-            <div class="mt-4">
-                <BreezeLabel for="email" value="Email" />
-                <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autocomplete="username" />
+            <div class="form-group">
+                <select v-model="form.gender" class="form-control">
+                    <option value="male">Male here</option>
+                    <option value="female">Female</option>
+                </select>
             </div>
 
-            <div class="mt-4">
-                <BreezeLabel for="password" value="Password" />
-                <BreezeInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password" />
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked="checked" />
+                    <i class="check-box"></i>Accept Terms & Conditions ?
+                </label>
             </div>
-
-            <div class="mt-4">
-                <BreezeLabel for="password_confirmation" value="Confirm Password" />
-                <BreezeInput id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Already registered?
-                </Link>
-
-                <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </BreezeButton>
+            <a href="#" title class="already-have">Already have an account</a>
+            <div class="submit-btns">
+                <button class="mtr-btn ">
+                    <span>Register</span>
+                </button>
             </div>
         </form>
-    </BreezeGuestLayout>
+    </div>
 </template>
